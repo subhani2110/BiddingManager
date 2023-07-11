@@ -1,0 +1,33 @@
+﻿@model GBC_Bids_Group.ViewModels.ReviewViewModel
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+<div class="container">
+    <h3 class="text-center">Reviews for: @Model.Seller</h3>
+    <hr />
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>By</th>
+                    <th>Comment</th>
+                    <th>Rating</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Reviews)
+                {
+                    <tr>
+                        <td>@item.BuyerId</td>
+                        <td>@item.Comment</td>
+                        <td>@item.Rating</td>
+                        <td>@item.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

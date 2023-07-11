@@ -1,0 +1,43 @@
+﻿@model GBC_Bids_Group.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Username"]</h1>
+</div>
+<hr />
+<div class="row g-3">
+    <div class="col-sm-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Total Assets</h5>
+                <p class="card-text">@Model.TotalAssets</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <h5 class="card-title">Total Bids</h5>
+                <p class="card-text">@Model.TotalBids</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">Total Sold</h5>
+                <p class="card-text">@Model.TotalWon</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="card-text">@Model.TotalUsers</p>
+            </div>
+        </div>
+    </div>
+</div>

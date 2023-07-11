@@ -1,0 +1,45 @@
+﻿@model GBC_Bids_Group.ViewModels.BidsViewModel
+@{
+    ViewData["Title"] = "Bibs By Buyer";
+}
+<style>
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: contain;
+    }
+</style>
+<div class="container">
+    <h3 class="text-center">Bids By: @Model.Buyer.Name</h3>
+    <hr />
+    <div class="row">
+        @foreach (var item in Model.Bids)
+        {
+            
+                var cardClass = item.IsWon ? "card border-success" : "card";
+            
+            <div class="col-md-3">
+                <div class="card-deck">
+                    <div class="@cardClass">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Amount</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Asset: @item.Asset.Name</li>
+                                <li class="list-group-item">Date: @item.Date.ToShortDateString()</li>
+                            </ul>
+                        </div>
+                        @if (item.IsWon)
+                        {
+                            <div class="card-footer">
+                                <a asp-action="Add" asp-controller="Review" asp-route-id="@item.AssetId" class="btn btn-success">Add Review</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

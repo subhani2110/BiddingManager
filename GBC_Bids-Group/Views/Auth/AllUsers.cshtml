@@ -1,0 +1,46 @@
+﻿@model GBC_Bids_Group.ViewModels.UserViewModel
+@{
+    ViewData["Title"] = "Users";
+}
+<style>
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: contain;
+    }
+</style>
+<div class="container">
+    <h3 class="text-center">My Assets</h3>
+    <hr />
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Login Enabled</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Users)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Username</td>
+                        <td>@item.Email</td>
+                        <td>
+                            <button class="btn btn-primary">Enable</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

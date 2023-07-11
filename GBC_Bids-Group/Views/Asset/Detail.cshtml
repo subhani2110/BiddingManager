@@ -1,0 +1,38 @@
+﻿@model GBC_Bids_Group.ViewModels.PlaceBidViewModel
+@{
+    ViewData["Title"] = "Detail";
+}
+<style>
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: contain;
+    }
+</style>
+<div class="container">
+    <h3 class="text-center">Detail of: @Model.Asset.Name </h3>
+    <hr />
+    <div class="card">
+        <img src="/AssetImages/@Model.Asset.ImageUrl" class="card-img-top" alt="@Model.Asset.Name">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Asset.Name</h5>
+            <p class="card-text">@Model.Asset.Description</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Minimum Bid: @Model.Asset.MinimumBid</li>
+                <li class="list-group-item">Current Bid: @Model.MinBid</li>
+                <li class="list-group-item">Starts At: @Model.Asset.StartDate.ToShortDateString()</li>
+                <li class="list-group-item">Ends At: @Model.Asset.EndDate.ToShortDateString()</li>
+                <li class="list-group-item">Condition: @Model.Asset.Condition</li>
+                <li class="list-group-item">Category: @Model.Asset.Category</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/jquery-validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

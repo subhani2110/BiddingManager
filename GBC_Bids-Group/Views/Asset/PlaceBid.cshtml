@@ -1,0 +1,55 @@
+﻿@model GBC_Bids_Group.ViewModels.PlaceBidViewModel
+@{
+    ViewData["Title"] = "Place Bid";
+}
+<style>
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: contain;
+    }
+</style>
+<div class="container">
+    <h3 class="text-center">Place Bid for: @Model.Asset.Name </h3>
+    <hr />
+    <div class="card">
+        <img src="/AssetImages/@Model.Asset.ImageUrl" class="card-img-top" alt="@Model.Asset.Name">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Asset.Name</h5>
+            <p class="card-text">@Model.Asset.Description</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Minimum Bid: @Model.Asset.MinimumBid</li>
+                <li class="list-group-item">Current Bid: @Model.MinBid</li>
+                <li class="list-group-item">Starts At: @Model.Asset.StartDate.ToShortDateString()</li>
+                <li class="list-group-item">Ends At: @Model.Asset.EndDate.ToShortDateString()</li>
+                <li class="list-group-item">Condition: @Model.Asset.Condition</li>
+                <li class="list-group-item">Category: @Model.Asset.Category</li>
+            </ul>
+        </div>
+        <div class="container card-footer d-flex justify-content-between">
+            <form method="post" asp-action="PlaceBid" asp-controller="Asset" class="row g-3">
+                <input asp-for="AssetId" type="hidden" value="@Model.Asset.Id" />
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text">Your Bid</span>
+                        <input asp-for="Amount" type="number" min="@Model.MinBid" id="bid-amount" class="form-control" required>
+                    </div>
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">
+                        Place Bid
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/jquery-validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

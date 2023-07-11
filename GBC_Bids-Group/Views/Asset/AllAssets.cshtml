@@ -1,0 +1,70 @@
+﻿@model GBC_Bids_Group.ViewModels.AssetViewModel
+@{
+    ViewData["Title"] = "Assets";
+}
+<style>
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: contain;
+    }
+</style>
+<div class="container">
+    <h3 class="text-center">My Assets</h3>
+    <hr />
+    <div class="row">
+        @foreach (var item in Model.Assets)
+        {
+            <div class="col-md-3">
+                @{
+                    var status = "";
+                    var statusClass = "";
+                    if (item.IsSold)
+                    {
+                        status = "Sold";
+                        statusClass = "text-success";
+                    }
+                    else if (item.EndDate < DateTime.Now)
+                    {
+                        status = "Expired";
+                        statusClass = "text-danger";
+                    }
+                    else if (item.StartDate > DateTime.Now)
+                    {
+                        status = "Not Started";
+                        statusClass = "text-secondary";
+                    }
+                    else
+                    {
+                        status = "Active";
+                        statusClass = "text-primary";
+                    }
+                }
+                <div class="card">
+                    <img src="/AssetImages/@item.ImageUrl" class="card-img-top" alt="@item.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Minimum Bid: @item.MinimumBid</li>
+                            <li class="list-group-item">Start Date: @item.StartDate.ToShortDateString()</li>
+                            <li class="list-group-item">End Date: @item.EndDate.ToShortDateString()</li>
+                            <li class="list-group-item">Condition: @item.Condition</li>
+                            <li class="list-group-item">Category: @item.Category</li>
+                        </ul>
+                    </div>
+                    <div class="container card-footer d-flex justify-content-between">
+                        <span class="@statusClass">@status</span>
+                        <a class="btn btn-primary btn-sm ms-auto" asp-controller="Bid" asp-action="BidsByAsset" asp-route-id="@item.Id">
+                            Bids
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>

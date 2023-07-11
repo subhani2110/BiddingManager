@@ -1,0 +1,110 @@
+﻿@model GBC_Bids_Group.ViewModels.AssetViewModel
+@inject IHttpContextAccessor httpContextAccessor
+@{
+    ViewData["Title"] = "Assets";
+    var sessionManager = new SessionManager(httpContextAccessor);
+    var userId = sessionManager.GetUserId();
+}
+<style>
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: contain;
+    }
+</style>
+<div class="container">
+    <h3 class="text-center">Auctioned Assets</h3>
+    <hr />
+    <form method="post" asp-action="Index" asp-controller="Asset">
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Name">Search by Name</label>
+                <input asp-for="Name" type="text" class="form-control" placeholder="Enter name">
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Description">Search by Description</label>
+                <input asp-for="Description" type="text" class="form-control" placeholder="Enter description">
+            </div>
+            <div class="col-md-4">
+                <label asp-for="MinimumBid">Search by Minimum Bid</label>
+                <input asp-for="MinimumBid" type="number" class="form-control" placeholder="Enter minimum bid">
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Condition">Search by Condition</label>
+                <input asp-for="Condition" type="text" class="form-control" placeholder="Enter Condition">
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Category">Search by Category</label>
+                <select asp-for="Category" class="form-select">
+                    <option value="">-- Select a condition --</option>
+                    <option value="New">New</option>
+                    <option value="Used - Like New">Used - Like New</option>
+                    <option value="Used - Good">Used - Good</option>
+                    <option value="Used - Fair">Used - Fair</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary mt-4">Search</button>
+            </div>
+        </div>
+    </form>
+    <hr />
+    <div class="row">
+        @foreach (var item in Model.Assets)
+        {
+            <div class="col-md-3">
+                <div class="card-deck">
+                    <div class="card">
+                        <a asp-action="Detail" asp-controller="Asset" asp-route-id="@item.Id" >
+                        <img src="/AssetImages/@item.ImageUrl" class="card-img-top" alt="@item.Name">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">@item.Description</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">End Date: @item.EndDate.ToShortDateString()</li>
+                            </ul>
+                        </div>
+                        <div class="container card-footer d-flex justify-content-between">
+                            <a asp-action="GetBySeller" asp-controller="Review" asp-route-id="@item.SellerId">
+                                <small class="text-muted"><b>Seller:</b> @item.Seller.Name</small>
+                                </a>
+                            @if (Model.IsUser && sessionManager.IsAuthenticatedClient())
+                            {
+                                if (item.SellerId != userId && item.EndDate > DateTime.Now)
+                                {
+                                    <a asp-action="PlaceBid" asp-controller="Asset" asp-route-id="@item.Id" class="btn btn-primary btn-sm ms-auto">
+                                        Place Bid
+                                    </a>
+                                }
+                                else if (item.IsSold)
+                                {
+                                    <button disabled class="btn btn-success btn-sm ms-auto">
+                                        Sold
+                                    </button>
+                                }
+                                else if (item.EndDate < DateTime.Now)
+                                {
+                                    <button disabled class="btn btn-danger btn-sm ms-auto">
+                                        Expired
+                                    </button>
+                                }
+                                else if (item.SellerId == userId)
+                                {
+                                    <button disabled class="btn btn-primary btn-sm ms-auto">
+                                        Own Asset
+                                    </button>
+                                }
+                            }
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model GBC_Bids_Group.ViewModels.ReviewViewModel
+@{
+    ViewData["Title"] = "Add Asset";
+}
+
+<div class="container">
+    <h3 class="text-center">Add Review</h3>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Add" method="post">
+                        <div class="form-group mb-3">
+                            <label asp-for="BuyerId">Buyer</label>
+                            <input asp-for="BuyerId" class="form-control" hidden />
+                            <input asp-for="Buyer" class="form-control" readonly />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Seller">Seller</label>
+                            <input asp-for="SellerId" class="form-control" hidden />
+                            <input asp-for=Seller class="form-control" type="text" readonly />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Comment">Comment</label>
+                            <textarea asp-for="Comment" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Rating">Rating</label>
+                            <input asp-for="Rating" class="form-control" type="number" min="1" max="10" />
+                            <span asp-validation-for="Rating" class="text-danger"></span>
+
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Date">Date</label>
+                            <input asp-for="Date" class="form-control" type="date" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Review</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/jquery-validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
